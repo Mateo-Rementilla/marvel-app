@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="icon" href="Marvel.png" type="image/gif" sizes="16x16"> <!--Favicon Image-->
+    <head>
+      <title> Marvel Movie Reviews</title>
+      <meta charset="utf-8">
+
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <!-- Compiled and minified CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <!-- Compiled and minified JavaScript -->
+      <link rel="stylesheet" href="Marvel.css">
+      <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-analytics.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.6.0/firebase-database.js"></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+
+
+      <style> 
+
+        nav {
+          background-color: black;
+        }
+
+        form {
+          margin-left: 217px;
+          margin-right: 560px;
+        }
+
+        textarea {
+          width: 100%;
+          height: 150px;
+          padding: 12px 20px;
+          box-sizing: border-box;
+          border: 2px solid #ccc;
+          border-radius: 4px;
+          background-color: #f8f8f8;
+          resize: vertical;
+        }
+
+        #Name1 {
+          display: block;
+          padding: 10px;
+          color: white;
+        }
+
+        #Date1 {
+          display: block;
+          padding: 10px;
+          color: white;
+        }
+
+        .dropdown-content{
+          width: max-content !important;
+          height:auto !important;
+        }
+
+        #WriteReview {
+          margin-left: 217px;
+        }
+
+        #submit {
+          margin-left: 217px;
+          margin-right: 560px;
+          display: none;
+        }
+
+      </style>
+    </head>   
+<body>
+
+<ul id="dropdown" class="dropdown-content red darken-2">
+    <li><a href="./AllMovies.html?phase=phase1" class="white-text">Phase 1</a></li>
+    <li><a href="./AllMovies.html?phase=phase2" class="white-text">Phase 2</a></li>
+    <li><a href="./AllMovies.html?phase=phase3" class="white-text">Phase 3</a></li>
+    <li><a href="./AllMovies.html?phase=phase4" class="white-text">Phase 4</a></li>
+</ul>
+
+<nav>
+  <div class="nav">
+    <ul id="nav" class="left hide-on-med-and-down">
+      <li><a href="./index.html">Home</a></li>
+      
+      <li><a class="dropdown-trigger" data-target="dropdown">
+          Phases <i class="material-icons right">arrow_drop_down</i></a>
+      </li>
+
+      <li><a href="./AllMovies.html?phase=all">All Movies</a></li>
+     <ul id="nav" class="brand-logo right">
+      <li><a href="#">Login</a></li>
+    </ul>
+  </div>
+</nav>
+</nav>
+
+<!-- Location for the Movie Info -->
+<div class="container">
+  <div id="movies-view"> <!-- Movies will Get Dumped Here -->
+  </div>
+</div>
+
+<!-- Button for Writing a Review -->
+<button class="btn waves-effect green" onclick="showreviewform()" id="WriteReview">Write Review</button>
+
+<!-- Form that holds the Reviews when Button "Write Review" is clicked -->
+  <form hidden id="thereview">
+    <input type="text" id="name" placeholder="Enter Name">
+    <br>
+    <br>
+    <span style="color: #D3D3D3; font-size: 17px;"> Average Rating </span>
+     <div class="container-2" style="margin-left: -120px;">
+      <div class="star-widget">
+        <input type="radio" data-num=5 name="rate" id="rate-5">
+        <label for="rate-5" class="fas fa-star"></label>
+        <input type="radio" data-num=4 name="rate" id="rate-4">
+        <label for="rate-4" class="fas fa-star"></label>
+        <input type="radio" data-num=3 name="rate" id="rate-3">
+        <label for="rate-3" class="fas fa-star"></label>
+        <input type="radio" data-num=2 name="rate" id="rate-2">
+        <label for="rate-2" class="fas fa-star"></label>
+        <input type="radio" data-num=1 name="rate" id="rate-1">
+        <label for="rate-1" class="fas fa-star"></label>
+    </div>
+  </div>
+  <br>
+    <textarea id="comments" type="text" placeholder="Enter Comments" style="border-radius: 5px; border-color: gray;"></textarea>
+    <br>
+  </form>
+      <button hidden class="btn waves-effect green" id="submit">Submit Review</button>
+    <br>
+    <br>
+
+
+<!-- Cards for each Individual Review -->
+<div class="row" style="padding-left: 206px;">
+  <div class="col s12 m6" id="reviews">
+  </div>
+</div>
+     
+<script type="text/javascript">
+
+    // Function for sending the data to Firebase
+    function setData() 
+      {
+
+        var ref = firebase.database().ref('Reviews').push();
+        var sName = document.getElementById("name").value;
+        var sAveragerating = parseInt($("input:checked").attr("data-num"))
+        var sComments = document.getElementById("comments").value;
+
+        var dateObj = new Date();
+        var month = dateObj.getUTCMonth() + 1; // months from 1-12
+        var day = dateObj.getUTCDate();
+        var year = dateObj.getUTCFullYear();
+
+        newdate = month + "/" + day + "/" + year;
+        console.log(sAveragerating)
+        var data = 
+        {
+            Name: sName,
+            AverageRating: sAveragerating,
+            Comments: sComments,
+            Movie: movie, 
+            Date: newdate
+        }
+          ref.set(data).then(function(){
+            getReviews();
+          }).then(function(){
+            resetFunction();
+          });
+      }
+        
+        // Function for getting the data from Firebase
+        function getReviews(){
+
+           $("#reviews").empty()
+            // uncheck the star here (Work on)
+            // database = Grab all data, .child = From Reviews section, OrderByChild = Order by the Movie, equalTo = The Movie name from the other document, get = push.  
+            var database = firebase.database().ref();
+            database.child("Reviews").orderByChild("Movie").equalTo(movie).get().then(function(snapshot) {
+            if (snapshot.exists()) {
+              var reviews = snapshot.val();
+              Object.values(reviews).reverse().forEach(function(review){
+            
+            // Formatting the data sent to firebase back out to being displayed as a review on the page. 
+          
+            var review1 = $("<div>").addClass("card blue-grey lighten-4").css({"width": "660px", "padding":"10px"});
+            var date = $("<span>").text(`Date: ${review.Date}`).css({"float":"right","color":"black", "margin-bottom":"10px"})
+            var name = $("<span>").text(`Name: ${review.Name}`).css({"color":"black"})
+            var avr = $("<p>").text(` Average Rating: `)
+            review1.append(name)
+            review1.append(date)
+            for (var i=0; i<5; i++){
+              span = $("<span>").addClass("fa fa-star")
+              if (i + 1 <= parseInt(review.AverageRating)){
+                span.css({"color": "orange"})
+              }
+              avr.append(span)
+
+            }
+
+            var comments = $("<span>").text(`Comments: ${review.Comments}`).css({"display":"block","color":"black", "margin-bottom":"10px"})
+
+           
+            review1.append(avr)
+            review1.append(comments)
+
+            // Displaying the review
+            $("#reviews").append(review1);
+
+            })
+            
+            }
+
+            else {
+              console.log("No data available");
+              }
+              }).catch(function(error) {
+              console.error(error);
+              });
+        } 
+                   
+
+        // Create function that displays all of the movie info needed from the OMDB API
+        function displayMovieInfo() {
+
+          var urlParams = new URLSearchParams(window.location.search);
+          var movie = urlParams.get('id');
+          var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
+          // Creating a URL element from the Open Movie Database API
+
+          // Creating an AJAX call for the specific movie button being clicked
+          $.ajax({
+            url: queryURL,
+            method: "GET"
+          }).then(function(response) {
+
+            // Creating an element for each compenent I want to be displayed for each movie 
+            var movieTitle = response.Title;
+            var runTime = response.Runtime;
+            var genre = response.Genre;
+            var rating = response.Ratings[0].Value;
+            var released = response.Released;
+            var plot = response.Plot;
+            var imgURL = response.Poster;
+            var rated = response.Rated;
+            // Creating a div to hold the movie
+            var movieDiv = $("<div class='movie'>");
+
+            // Creating an element to have the Movie Title displayed
+            var movieTitleH2 = $("<h2>").text(movieTitle).css({"margin-right": "300px"});
+
+            // Appending the rating
+            movieDiv.append(movieTitleH2);
+
+            // Creating an element to hold the rated
+            var rated2 = $("<p>").text("Rated: " + rated);
+
+            // Appending the plot
+            movieDiv.append(rated2);
+
+            // Creating an element to have the runtime displayed
+            var runTime2 = $("<p>").text("Runtime: " + runTime);
+
+            // Appending the rating
+            movieDiv.append(runTime2);
+         
+            // Creating an element to have the genre displayed
+            var genre2 = $("<p>").text("Genre: " + genre);
+
+            // Appending the genre
+            movieDiv.append(genre2);
+
+            // Creating an element to hold the rating year
+            var rating2 = $("<p>").text("IMDB Rating: " + rating);
+
+            // Appending the rating year
+            movieDiv.append(rating2);
+
+            // Creating an element to hold the release year
+            var released2 = $("<p>").text("Released: " + released);
+
+            // Displaying the release year
+            movieDiv.append(released2);
+
+            // Creating an element to hold the plot
+            var plot2 = $("<p>").text("Plot: " + plot).css({"margin-right": "350px"});
+
+            // Appending the plot
+            movieDiv.append(plot2);
+
+            // Retrieving the URL for the image
+            // Creating an element to hold the image
+            var image2 = $("<img>").attr("src", imgURL).css({"position": "absolute", 
+              "top": "100px", "left": "925px", "width": "300px", "height": "450px"});
+
+            // Appending the image
+            movieDiv.append(image2);
+
+            // Display all of the appended elements
+            // # refers to an id="movies-view"
+            $("#movies-view").prepend(movieDiv);
+            
+             getReviews();
+
+          })}
+
+            var firebaseConfig = 
+            {
+                apiKey: "AIzaSyAsLy7r6kZsLOyudHgFF6T_ep9SPg3dqFM",
+                authDomain: "marvel-movies-reviews.firebaseapp.com",
+                databaseURL: "https://marvel-movies-reviews-default-rtdb.firebaseio.com",
+                projectId: "marvel-movies-reviews",
+                storageBucket: "marvel-movies-reviews.appspot.com",
+                messagingSenderId: "469099803089",
+                appId: "1:469099803089:web:585dd33cfe682f793a30f0"
+            };
+
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            
+            
+            urlParams = new URLSearchParams(window.location.search);
+            movie = urlParams.get('id');
+
+        // Calling the renderButtons function to display the initial buttons
+        displayMovieInfo();
+        
+        // When submit button (#submit) is clicked call the setData function. 
+        $(document).on("click", "#submit", setData);
+
+        // Function for that clear of the the data inputted by the user in the form
+        function resetFunction() {
+          document.getElementById("thereview").reset();
+        }
+
+        function showreviewform() {
+          var review = document.getElementById("thereview");
+          if (review.style.display === "none") {
+            review.style.display = "block";
+          } else {
+            review.style.display = "block";
+          }
+            var review1 = document.getElementById("submit");
+            if (review1.style.display === "none") {
+              review1.style.display = "block";
+            } else {
+              review1.style.display = "block";
+            }
+        }
+
+         $("#submit").click(function() {
+              $('html,body').animate({
+              scrollTop: $("#reviews").offset().top},
+                'slow');
+         });
+
+         $("#WriteReview").click(function() {
+              $('html,body').animate({
+              scrollTop: $("#WriteReview").offset().top},
+                'slow');
+         });
+
+        $(document).ready(function(){
+        $('.modal').modal();
+        $('.dropdown-trigger').dropdown();
+        });
+
+  </script>       
+</body>
+</html>

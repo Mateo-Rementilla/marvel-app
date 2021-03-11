@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="icon" href="Marvel.png" type="image/gif" sizes="16x16"> <!--Favicon Image-->
+
+<head>
+  <title> Marvel Movie Reviews</title>
+  <meta charset="utf-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection"/>
+  
+  <style> 
+  
+    body {
+  	  background-image: url('Marvel1.jpeg');
+  	  background-repeat: no-repeat;
+  	  background-attachment: fixed;  
+  	  background-size: cover;
+  	}
+
+  	nav {
+  		background-color: black;
+  	}
+
+  	div {
+    	background-color: transparent;
+    	background-repeat:no-repeat;
+    	border: none;
+    	cursor:pointer;
+    	overflow: hidden;
+    	outline: none;
+    	width: 1600px;
+    	height: 900px;
+  	}
+
+    .dropdown-content{
+      width: max-content !important;
+      height:auto !important;
+    }
+
+    p {
+      margin-left: 625px;
+      margin-top: 500px;
+      color: white;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<ul id="dropdown" class="dropdown-content red darken-2">
+    <li><a href="./AllMovies.html?phase=phase1" class="white-text">Phase 1</a></li>
+    <li><a href="./AllMovies.html?phase=phase2" class="white-text">Phase 2</a></li>
+    <li><a href="./AllMovies.html?phase=phase3" class="white-text">Phase 3</a></li>
+    <li><a href="./AllMovies.html?phase=phase4" class="white-text">Phase 4</a></li>
+</ul>
+
+<nav>
+  <div class="nav">
+    <ul id="nav" class="left hide-on-med-and-down">
+      <li><a href="#">Home</a></li>
+      
+      <li><a class="dropdown-trigger" data-target="dropdown">
+          Phases <i class="material-icons right">arrow_drop_down</i></a>
+      </li>
+
+      <li><a href="./AllMovies.html?phase=all">All Movies</a></li>
+     <ul id="nav" class="brand-logo right">
+      <li><a href="#">Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<p> Click anywhere to continue </p>
+
+<div onclick="window.location.href='file:///Users/mateo.rementilla/Desktop/Marvel%20Movie%20Reviews/AllMovies.html#AllMovies'"></div>
+
+<script>
+
+  $(document).ready(function(){
+  $('.modal').modal();
+  $('.dropdown-trigger').dropdown();
+  });
+
+</script>
+</body>
+</html>
