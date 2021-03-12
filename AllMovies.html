@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- <link rel="stylesheet" href="./materialize.css">
+  <link rel="stylesheet" href="./materialize.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -48,7 +48,7 @@
 <nav>
   <div class="nav">
     <ul id="nav" class="left hide-on-med-and-down">
-      <li><a href="./index">Home</a></li>
+      <li><a href="./index.html">Home</a></li>
       
       <li><a class="dropdown-trigger" data-target="dropdown">
           Phases <i class="material-icons right">arrow_drop_down</i></a>
@@ -61,9 +61,8 @@
   </div>
 </nav>
 
-  <div class="container">
-
-    <!-- Rendered Buttons will get Dumped Here  -->
+<div class="container">
+    <!-- Rendered Buttons will get Dumped Here -->
     <div id="buttons-view"></div>
 </div>
 
@@ -73,17 +72,15 @@
 
       var phases = {phase1 : ["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor"],
 
-     phase2:["Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Guardians of the Galaxy Vol 2.", "Avengers: Age of Ultron"],
+      phase2:["Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Guardians of the Galaxy Vol 2.", "Avengers: Age of Ultron"],
 
       phase3: ["Ant-Man", "Captain America: Civil War", "Spider-Man: Homecoming", "Doctor Strange", "Black Panther", "Thor: Ragnarok", "Avengers: Infinity War", "Ant-Man and the Wasp", "Avengers: Endgame", "Spider-Man: Far From Home"],
+      
       phase4: ["WandaVision", "The Falcon and the Winter Soldier"],
+      
       all:["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor", "Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Guardians of the Galaxy Vol 2.", "Avengers: Age of Ultron", "Ant-Man", "Captain America: Civil War", "Spider-Man: Homecoming", "Doctor Strange", "Black Panther", "Thor: Ragnarok", "Avengers: Infinity War", "Ant-Man and the Wasp", "Avengers: Endgame", "Spider-Man: Far From Home", "WandaVision", "The Falcon and the Winter Soldier"]
-}
+      }
       
-
-      // Initial array of movies
-      
-
       // Function for displaying movie data
       function renderButtons() {
 
