@@ -1,161 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-  <link rel="icon" href="Marvel.png" type="image/gif" sizes="16x16"> <!--Favicon Image-->
-
-<head>
-  <title> Marvel Movie Reviews</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="./materialize.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  
-  <style> 
-
-    nav {
-      background-color: black;
-    }
-
-  .marvel-poster{ 
-    border-radius: .25rem!important; 
-    margin: .5rem!important; 
-    float: left!important; 
-    vertical-align: middle; 
-    border-style: none; 
-    box-sizing: border-box; 
-    width: 300px; 
-    height: 450px 
-  }
+   <link rel="icon" href="Marvel.png" type="image/gif" sizes="16x16">
+   <!--Favicon Image-->
+   <head>
+      <title> Marvel Movie Reviews</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet" href="./materialize.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+      <style> 
+         nav {
+         background-color: black;
+         }
+         /* CSS code taken from bootstrap cards for formatting the movie buttons */
+         .marvel-poster{ 
+         border-radius: .25rem!important; 
+         margin: .5rem!important; 
+         float: left!important; 
+         vertical-align: middle; 
+         border-style: none; 
+         box-sizing: border-box; 
+         width: 300px; 
+         height: 450px 
+         }
+         /* Nav Bar styling for dropdown */
+         .dropdown-content{
+         width: max-content !important;
+         height:auto !important;
+         }
+      </style>
+   </head>
+   <body>
+      <ul id="dropdown" class="dropdown-content red darken-2">
+         <li><a href="./AllMovies.html?phase=phase1" class="white-text">Phase 1</a></li>
+         <li><a href="./AllMovies.html?phase=phase2" class="white-text">Phase 2</a></li>
+         <li><a href="./AllMovies.html?phase=phase3" class="white-text">Phase 3</a></li>
+         <li><a href="./AllMovies.html?phase=phase4" class="white-text">Phase 4</a></li>
+      </ul>
+      <nav>
+         <div class="nav">
+            <ul id="nav" class="left hide-on-med-and-down">
+            <li><a href="./index.html">Home</a></li>
+            <li><a class="dropdown-trigger" data-target="dropdown">
+               Phases <i class="material-icons right">arrow_drop_down</i></a>
+            </li>
+            <li><a href="./AllMovies.html?phase=all">All Movies</a></li>
+         </div>
+      </nav>
+      <div class="container">
+         <!-- Rendered Buttons will get Dumped Here -->
+         <div id="buttons-view">
+         </div>
+      </div>
+      <br>
+      <script type="text/javascript">
+         // An object, hence {} and have key value pairs. Key are the name of movies, and values are the movie url poster.
+         // Accessing the movie url poster images[Name of the movie], returns the url. 
+         
+         var images = {
+         "Captain America: The First Avenger": "https://m.media-amazon.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg",
+         "Iron Man": "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg",
+         "Iron Man 2": "https://m.media-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_SX300.jpg",
+         "The Incredible Hulk": "https://m.media-amazon.com/images/M/MV5BMTUyNzk3MjA1OF5BMl5BanBnXkFtZTcwMTE1Njg2MQ@@._V1_SX300.jpg",
+         "The Avengers": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+         "Thor": "https://m.media-amazon.com/images/M/MV5BOGE4NzU1YTAtNzA3Mi00ZTA2LTg2YmYtMDJmMThiMjlkYjg2XkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg",
+         "Iron Man 3": "https://m.media-amazon.com/images/M/MV5BMjE5MzcyNjk1M15BMl5BanBnXkFtZTcwMjQ4MjcxOQ@@._V1_SX300.jpg",
+         "Thor: The Dark World": "https://m.media-amazon.com/images/M/MV5BMTQyNzAwOTUxOF5BMl5BanBnXkFtZTcwMTE0OTc5OQ@@._V1_SX300.jpg",
+         "Captain America: The Winter Soldier": "https://m.media-amazon.com/images/M/MV5BMzA2NDkwODAwM15BMl5BanBnXkFtZTgwODk5MTgzMTE@._V1_SX300.jpg",
+         "Guardians of the Galaxy": "https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_SX300.jpg",
+         "Guardians of the Galaxy Vol 2.": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg",
+         "Avengers: Age of Ultron": "https://m.media-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg",
+         "Ant-Man": "https://m.media-amazon.com/images/M/MV5BMjM2NTQ5Mzc2M15BMl5BanBnXkFtZTgwNTcxMDI2NTE@._V1_SX300.jpg",
+         "Captain America: Civil War": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg",
+         "Spider-Man: Homecoming": "https://m.media-amazon.com/images/M/MV5BNTk4ODQ1MzgzNl5BMl5BanBnXkFtZTgwMTMyMzM4MTI@._V1_SX300.jpg",
+         "Doctor Strange": "https://m.media-amazon.com/images/M/MV5BNjgwNzAzNjk1Nl5BMl5BanBnXkFtZTgwMzQ2NjI1OTE@._V1_SX300.jpg",
+         "Black Panther": "https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_SX300.jpg",
+         "Thor: Ragnarok": "https://m.media-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SX300.jpg",
+         "Avengers: Infinity War": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg",
+         "Ant-Man and the Wasp": "https://m.media-amazon.com/images/M/MV5BYjcyYTk0N2YtMzc4ZC00Y2E0LWFkNDgtNjE1MzZmMGE1YjY1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
+         "Avengers: Endgame": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg",
+         "Spider-Man: Far From Home": "https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
+         "WandaVision": "https://m.media-amazon.com/images/M/MV5BYjJiZmE5ZDgtYWUxZi00MWI1LTg2MmEtZmUwZGE2YzRkNTE5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+         "The Falcon and the Winter Soldier": "https://m.media-amazon.com/images/M/MV5BODNiODVmYjItM2MyMC00ZWQyLTgyMGYtNzJjMmVmZTY2OTJjXkEyXkFqcGdeQXVyNzk3NDUzNTc@._V1_SX300.jpg",
+         "Guardians of the Galaxy Vol. 2": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg",
+         "Spider-Man: Far from Home": "https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
+         "Captain Marvel": "https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg", 
+         }
+         
+         // 5 Arrays within an object each phase and all: is a key and each value is an array of strings represents movie name
+         // Accessing the phase1 phases.phase1, returns the phase1. 
+         var phases = {phase1 : ["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor"],
+         
+         phase2:["Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man"],
+         
+         phase3: ["Captain America: Civil War", "Doctor Strange", "Guardians of the Galaxy Vol 2.", "Spider-Man: Homecoming", "Thor: Ragnarok", "Black Panther", "Avengers: Infinity War", "Ant-Man and the Wasp", "Captain Marvel", "Avengers: Endgame", "Spider-Man: Far From Home"],
+         
+         phase4: ["WandaVision", "The Falcon and the Winter Soldier"],
+         
+         all:["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor", "Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man","Captain America: Civil War", "Doctor Strange", "Guardians of the Galaxy Vol 2.", "Spider-Man: Homecoming", "Thor: Ragnarok", "Black Panther", "Avengers: Infinity War", "Ant-Man and the Wasp", "Captain Marvel", "Avengers: Endgame", "Spider-Man: Far From Home", "WandaVision", "The Falcon and the Winter Soldier"]}
+         
+         // Function for displaying movie data
+         function renderButtons() {
+         
+           // Deleting the movies prior to adding new movies
+           // (this is necessary otherwise you will have repeat buttons)
+           $("#buttons-view").empty();
+           var urlParams = new URLSearchParams(window.location.search); 
+           var phase =  urlParams.get('phase')
+          
+           var movies = phases[phase]
+          
+           // Looping through the array of movies
+           for (var i = 0; i < movies.length; i++) {
+         
+             // Then dynamicaly generating buttons for each movie in the array
+             // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+             var a = $("<img>");
+         
+             a.attr("src", images[movies[i]])
+             // Adding a class of movie-btn to our button
+             a.addClass("movie-btn marvel-poster");
+             // Adding a data-attribute
+             a.attr("data-name", movies[i]); 
     
-    .dropdown-content{
-       width: max-content !important;
-       height:auto !important;
-    }
-
-  </style>
-</head>
-<body>
-<ul id="dropdown" class="dropdown-content red darken-2">
-    <li><a href="./AllMovies.html?phase=phase1" class="white-text">Phase 1</a></li>
-    <li><a href="./AllMovies.html?phase=phase2" class="white-text">Phase 2</a></li>
-    <li><a href="./AllMovies.html?phase=phase3" class="white-text">Phase 3</a></li>
-    <li><a href="./AllMovies.html?phase=phase4" class="white-text">Phase 4</a></li>
-</ul>
-
-<nav>
-  <div class="nav">
-    <ul id="nav" class="left hide-on-med-and-down">
-      <li><a href="./index.html">Home</a></li>
-      
-      <li><a class="dropdown-trigger" data-target="dropdown">
-          Phases <i class="material-icons right">arrow_drop_down</i></a>
-      </li>
-
-      <li><a href="./AllMovies.html?phase=all">All Movies</a></li>
-  </div>
-</nav>
-
-<div class="container">
-    <!-- Rendered Buttons will get Dumped Here -->
-    <div id="buttons-view">
-      
-    </div>
-</div>
-
-<br>
-
-<script type="text/javascript">
-
-      var images = {
-    "Captain America: The First Avenger": "https://m.media-amazon.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_SX300.jpg",
-    "Iron Man": "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX300.jpg",
-    "Iron Man 2": "https://m.media-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_SX300.jpg",
-    "The Incredible Hulk": "https://m.media-amazon.com/images/M/MV5BMTUyNzk3MjA1OF5BMl5BanBnXkFtZTcwMTE1Njg2MQ@@._V1_SX300.jpg",
-    "The Avengers": "https://m.media-amazon.com/images/M/MV5BNDYxNjQyMjAtNTdiOS00NGYwLWFmNTAtNThmYjU5ZGI2YTI1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    "Thor": "https://m.media-amazon.com/images/M/MV5BOGE4NzU1YTAtNzA3Mi00ZTA2LTg2YmYtMDJmMThiMjlkYjg2XkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg",
-    "Iron Man 3": "https://m.media-amazon.com/images/M/MV5BMjE5MzcyNjk1M15BMl5BanBnXkFtZTcwMjQ4MjcxOQ@@._V1_SX300.jpg",
-    "Thor: The Dark World": "https://m.media-amazon.com/images/M/MV5BMTQyNzAwOTUxOF5BMl5BanBnXkFtZTcwMTE0OTc5OQ@@._V1_SX300.jpg",
-    "Captain America: The Winter Soldier": "https://m.media-amazon.com/images/M/MV5BMzA2NDkwODAwM15BMl5BanBnXkFtZTgwODk5MTgzMTE@._V1_SX300.jpg",
-    "Guardians of the Galaxy": "https://m.media-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_SX300.jpg",
-    "Guardians of the Galaxy Vol 2.": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg",
-    "Avengers: Age of Ultron": "https://m.media-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_SX300.jpg",
-    "Ant-Man": "https://m.media-amazon.com/images/M/MV5BMjM2NTQ5Mzc2M15BMl5BanBnXkFtZTgwNTcxMDI2NTE@._V1_SX300.jpg",
-    "Captain America: Civil War": "https://m.media-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_SX300.jpg",
-    "Spider-Man: Homecoming": "https://m.media-amazon.com/images/M/MV5BNTk4ODQ1MzgzNl5BMl5BanBnXkFtZTgwMTMyMzM4MTI@._V1_SX300.jpg",
-    "Doctor Strange": "https://m.media-amazon.com/images/M/MV5BNjgwNzAzNjk1Nl5BMl5BanBnXkFtZTgwMzQ2NjI1OTE@._V1_SX300.jpg",
-    "Black Panther": "https://m.media-amazon.com/images/M/MV5BMTg1MTY2MjYzNV5BMl5BanBnXkFtZTgwMTc4NTMwNDI@._V1_SX300.jpg",
-    "Thor: Ragnarok": "https://m.media-amazon.com/images/M/MV5BMjMyNDkzMzI1OF5BMl5BanBnXkFtZTgwODcxODg5MjI@._V1_SX300.jpg",
-    "Avengers: Infinity War": "https://m.media-amazon.com/images/M/MV5BMjMxNjY2MDU1OV5BMl5BanBnXkFtZTgwNzY1MTUwNTM@._V1_SX300.jpg",
-    "Ant-Man and the Wasp": "https://m.media-amazon.com/images/M/MV5BYjcyYTk0N2YtMzc4ZC00Y2E0LWFkNDgtNjE1MzZmMGE1YjY1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg",
-    "Avengers: Endgame": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_SX300.jpg",
-    "Spider-Man: Far From Home": "https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
-    "WandaVision": "https://m.media-amazon.com/images/M/MV5BYjJiZmE5ZDgtYWUxZi00MWI1LTg2MmEtZmUwZGE2YzRkNTE5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
-    "The Falcon and the Winter Soldier": "https://m.media-amazon.com/images/M/MV5BNTU5YmNiYmItM2VjZC00MGNjLWE1YjEtOGUzMDU5OGZkYjA5XkEyXkFqcGdeQXVyNzEzNjU1NDg@._V1_SX300.jpg",
-    "Guardians of the Galaxy Vol. 2": "https://m.media-amazon.com/images/M/MV5BNjM0NTc0NzItM2FlYS00YzEwLWE0YmUtNTA2ZWIzODc2OTgxXkEyXkFqcGdeQXVyNTgwNzIyNzg@._V1_SX300.jpg",
-    "Spider-Man: Far from Home": "https://m.media-amazon.com/images/M/MV5BMGZlNTY1ZWUtYTMzNC00ZjUyLWE0MjQtMTMxN2E3ODYxMWVmXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
-    "Captain Marvel": "https://m.media-amazon.com/images/M/MV5BMTE0YWFmOTMtYTU2ZS00ZTIxLWE3OTEtYTNiYzBkZjViZThiXkEyXkFqcGdeQXVyODMzMzQ4OTI@._V1_SX300.jpg"
-}
-
-      var phases = {phase1 : ["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor"],
-
-      phase2:["Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man"],
-
-      phase3: ["Captain America: Civil War", "Doctor Strange", "Guardians of the Galaxy Vol 2.", "Spider-Man: Homecoming", "Thor: Ragnarok", "Black Panther", "Avengers: Infinity War", "Ant-Man and the Wasp", "Captain Marvel", "Avengers: Endgame", "Spider-Man: Far From Home"],
-      
-      phase4: ["WandaVision", "The Falcon and the Winter Soldier"],
-      
-      all:["Captain America: The First Avenger", "Iron Man", "Iron Man 2", "The Incredible Hulk", "The Avengers", "Thor", "Iron Man 3", "Thor: The Dark World", "Captain America: The Winter Soldier", "Guardians of the Galaxy", "Avengers: Age of Ultron", "Ant-Man","Captain America: Civil War", "Doctor Strange", "Guardians of the Galaxy Vol 2.", "Spider-Man: Homecoming", "Thor: Ragnarok", "Black Panther", "Avengers: Infinity War", "Ant-Man and the Wasp", "Captain Marvel", "Avengers: Endgame", "Spider-Man: Far From Home", "WandaVision", "The Falcon and the Winter Soldier"]}
-
-      // Function for displaying movie data
-      function renderButtons() {
-
-        // Deleting the movies prior to adding new movies
-        // (this is necessary otherwise you will have repeat buttons)
-        $("#buttons-view").empty();
-        var urlParams = new URLSearchParams(window.location.search);  
-        var movies = phases[urlParams.get('phase')]
-
-        // Looping through the array of movies
-        for (var i = 0; i < movies.length; i++) {
-
-          // Then dynamicaly generating buttons for each movie in the array
-          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
-          var a = $("<img>");
-
-          a.attr("src", images[movies[i]])
-          // Adding a class of movie-btn to our button
-          a.addClass("movie-btn marvel-poster");
-          // Adding a data-attribute
-          a.attr("data-name", movies[i]); 
-
-          // Providing the initial button text
-          a.text(movies[i]);
-          // Adding the button to the buttons-view div
-          $("#buttons-view").append(a);
-        
-        }
-      }
-
-      // Adding a click event listener to all elements with a class of "movie-btn"
-      $(document).on("click", ".movie-btn", function(){
-        var movie = $(this).attr("data-name");
-        console.log(movie)
-        window.location.href = './Movies.html?id=' + movie;
-      });
-
-      $(document).ready(function(){
-      $('.modal').modal();
-      $('.dropdown-trigger').dropdown();
-      });
-
-      // Calling the renderButtons function to display the initial buttons
-      renderButtons();
-
-    </script>
-  </div>
-
-</body>
+             // Adding the button to the buttons-view div
+             $("#buttons-view").append(a);
+           
+           }
+         }
+         
+         // Adding a click event listener to all elements with a class of "movie-btn"
+         // Anytime user clicks anything with the class movie-btn determine which button was clicked, 
+         $(document).on("click", ".movie-btn", function(){
+           var movie = $(this).attr("data-name");
+           window.location.href = './Movies.html?id=' + movie;
+         });
+         
+         $(document).ready(function(){
+         $('.modal').modal();
+         $('.dropdown-trigger').dropdown();
+         });
+         
+         // Calling the renderButtons function to display the initial buttons
+         renderButtons();
+         
+      </script>
+      </div>
+   </body>
 </html>
